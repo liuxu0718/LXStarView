@@ -24,17 +24,16 @@
     starViewUp.delegate = self;
     [self.view addSubview:starViewUp];
     
-    
     LXStarView *starViewDown = [[LXStarView alloc]initWithFrame:CGRectMake(0, 200, 175, 30)spacingFrame:5];
     starViewDown.center = CGPointMake(self.view.center.x, starViewUp.frame.origin.y + 100);
     //if only display, please setting userInteractionEnabled = NO.
     starViewDown.userInteractionEnabled = NO;
-    [starViewDown showStarNum:5];
+    [starViewDown showStarNumbers:5];
     [self.view addSubview:starViewDown];
 }
 
-- (void)getStarNum:(NSInteger)num {
-    NSLog(@"%ld", num);
+- (void)lxStarView:(LXStarView *)starView showStarNumbers:(NSInteger)starNumbers {
+    NSLog(@"%ld", starNumbers);
 }
 
 - (void)didReceiveMemoryWarning {

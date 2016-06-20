@@ -8,42 +8,42 @@
 
 #import "LXStarView.h"
 
-
-
 @implementation LXStarView
+
 - (id)initWithFrame:(CGRect)frame
        spacingFrame:(NSInteger)spacing {
     if (self = [super initWithFrame:frame]) {
         for (int i = 0; i < 5; i++) {
-            self.starButton = [[UIButton alloc]initWithFrame:CGRectMake((30 + spacing) * i, 0, frame.size.height, frame.size.height)];
-            self.starButton.tag = 100 + i;
-            [self.starButton setBackgroundImage:[UIImage imageNamed:@"star_yellow_show@2x.png"] forState:UIControlStateNormal];
-            [self addSubview:self.starButton];
-            [self.starButton addTarget:self action:@selector(starButtonAction:) forControlEvents:UIControlEventTouchDown];
+            UIButton *starButton = [[UIButton alloc]initWithFrame:CGRectMake((30 + spacing) * i, 0, frame.size.height, frame.size.height)];
+            starButton.tag = 100 + i;
+            [starButton setBackgroundImage:[UIImage imageNamed:@"star_yellow_show@2x.png"] forState:UIControlStateNormal];
+            [starButton addTarget:self action:@selector(starButtonAction:) forControlEvents:UIControlEventTouchDown];
+            [self addSubview:starButton];
         }
     }
     return self;
 }
+
 - (void)starButtonAction:(UIButton *)sender {
-    for (UIButton *button in self.subviews) {
-        if (button.tag >= 100) {
-            if (button.tag <= sender.tag) {
-                [button setBackgroundImage:[UIImage imageNamed:@"star_yellow_show@2x.png"] forState:UIControlStateNormal];
-            }
-            else {
-                [button setBackgroundImage:[UIImage imageNamed:@"star_gray_show@2x.png"] forState:UIControlStateNormal];
+    if ([_delegate respondsToSelector:@selector(lxStarView:showStarNumbers:)]) {
+        for (UIButton *button in self.subviews) {
+            if (button.tag >= 100) {
+                if (button.tag <= sender.tag) {
+                    [button setBackgroundImage:[UIImage imageNamed:@"star_yellow_show@2x.png"] forState:UIControlStateNormal];
+                } else {
+                    [button setBackgroundImage:[UIImage imageNamed:@"star_gray_show@2x.png"] forState:UIControlStateNormal];
+                }
             }
         }
+        [_delegate lxStarView:self showStarNumbers:sender.tag - 99];
     }
-    [_delegate getStarNum:sender.tag - 99];
 }
 
-- (void)showStarNum:(NSInteger)num {
+- (void)showStarNumbers:(NSInteger)numbers {
     for (UIButton *button in self.subviews) {
-        if (button.tag <= 99 + num) {
+        if (button.tag <= 99 + numbers) {
             [button setBackgroundImage:[UIImage imageNamed:@"star_yellow_show@2x.png"] forState:UIControlStateNormal];
-        }
-        else {
+        } else {
             [button setBackgroundImage:[UIImage imageNamed:@"star_gray_show@2x.png"] forState:UIControlStateNormal];
         }
     }

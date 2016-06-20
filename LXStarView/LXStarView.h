@@ -7,19 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+
+@class LXStarView;
+
 @protocol LXStarViewDelegate <NSObject>
 
-- (void)getStarNum:(NSInteger)num;
+- (void)lxStarView:(LXStarView*)starView showStarNumbers:(NSInteger)starNumbers;
 
 @end
 
 @interface LXStarView : UIView
-@property (nonatomic, strong) id <LXStarViewDelegate> delegate;
-@property (nonatomic, strong) UIButton *starButton;
 
-- (void)showStarNum:(NSInteger)num;
+@property (nonatomic, weak) id <LXStarViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame
        spacingFrame:(NSInteger)spacing;
+
+- (void)showStarNumbers:(NSInteger)numbers;
 
 @end
